@@ -1061,7 +1061,7 @@ def build_result(args: argparse.Namespace) -> dict[str, object]:
         "status": "ok",
         "execution_policy": "report_only_until_user_confirms",
         "requires_user_confirmation": True,
-        "confirmation_prompt": "I recovered the previous project thread. Should I continue this recovered request?",
+        "confirmation_prompt": "我已恢复上一个会话，先继续这个任务吗？",
         "detail": args.detail,
         "current_cwd": cwd,
         "scope_used": scope,
@@ -1109,38 +1109,46 @@ def build_result(args: argparse.Namespace) -> dict[str, object]:
 
 def render_text(result: dict[str, object]) -> str:
     lines = [
-        "Recovered Codex request",
-        f"- matched search target: {result['matched_cwd']}",
-        f"- thread workspace: {result['thread_cwd']}",
-        f"- thread: {result['thread_title']} ({result['thread_id']})",
-        f"- updated: {result['updated_at_local']}",
-        f"- source: {result['resolved_source']}",
-        f"- execution policy: {result.get('execution_policy', 'unknown')}",
-        f"- requires user confirmation: {result.get('requires_user_confirmation', True)}",
-        f"- newer thread state available: {result.get('newer_thread_state_available', False)}",
-        f"- completed resolved request: {result.get('completed_resolved_request', False)}",
-        f"- latest thread state confidence: {result.get('latest_thread_state_confidence', 'none')}",
-        f"- needs more context: {result['needs_more_context']}",
-        f"- context expanded upward: {result.get('context_expanded_upward', False)}",
+        "我已从上一个线程恢复到这次任务。",
         "",
-        "Last conversation content:",
+        f"上次会话：{result['thread_title']}（更新时间：{result['updated_at_local']}）",
+        f"匹配目录：{result['thread_cwd']}（触发搜索目录：{result['matched_cwd']}）",
+        f"上次消息来源：{result['resolved_source']}",
+        "",
+        "上次对话最后是：",
         f"[{result['last_conversation_role']}] {result['last_conversation_content'] or '(empty)'}",
         "",
-        "Literal last user message:",
-        str(result["literal_last_user_message"] or "(empty)"),
-        "",
-        "Resolved request:",
+        "可直接接着继续的内容：",
         str(result["resolved_request"] or "(empty)"),
     ]
+    if result.get("latest_thread_state"):
+        lines.extend(
+            [
+                "",
+                "最近一次线程状态：",
+                str(result["latest_thread_state"] or "(empty)"),
+            ]
+        )
     decision_basis = str(result.get("decision_basis_message") or "")
     if decision_basis:
-        lines.extend(["", "Decision basis message:", decision_basis])
+        lines.extend(["", "决策依据：", decision_basis])
+    if result.get("context_expanded_upward"):
+        lines.extend(["", "已自动向上回溯对话上下文来消解模糊指代。"])
+    if result.get("needs_more_context"):
+        lines.extend(["", "注意：当前请求仍可能需要更多上下文。"])
     context = result.get("supporting_context") or []
     if context:
         lines.append("")
-        lines.append("Supporting context:")
+        lines.append("补充上下文：")
         for index, item in enumerate(context, start=1):
-            lines.append(f"{index}. [{item['role']}] {item['text']}")
+            lines.append(f"- [{index}] [{item['role']}] {item['text']}")
+    lines.extend(
+        [
+            "",
+            str(result.get("confirmation_prompt") or "要继续这个任务吗？"),
+            "（直接回复“继续”即可）",
+        ]
+    )
     return "\n".join(lines)
 
 

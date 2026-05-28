@@ -53,10 +53,14 @@ After a compact interruption:
 
 1. Stay in the same project workspace. Do not spend time reviving the broken thread.
 2. Open a fresh Codex session.
-3. Type `thread-anchor`.
+3. Type one of:
 
 ```text
 thread-anchor
+thread-anchor continue
+thread-anchor recover
+resume thread-anchor
+continue last task
 ```
 
 It extracts the last actionable request and the newer thread state from the previous conversation so the new thread can continue in the right place. No manual recall, no re-explaining the requirement, no rebuilding context from scratch.
@@ -119,12 +123,6 @@ thread-anchor
 ```
 
 If you just crawled out of a broken thread, this is usually the first thing to say. No need to explain the whole task twice.
-
-## Usage Flow
-
-<p align="center">
-  <img src="assets/thread-anchor-flow.png" alt="thread-anchor recovery flow" width="100%">
-</p>
 
 ## What It Handles
 

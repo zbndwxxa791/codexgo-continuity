@@ -1,6 +1,6 @@
 ---
 name: "thread-anchor"
-description: 'Recover the previous Codex session for the current workspace after compaction, crash, or context loss. Use when the user types `thread-anchor`, asks to recover the previous Codex session, or asks to continue after a compact/crash break.'
+description: 'Recover the previous Codex session for the current workspace after compaction, crash, or context loss. Use when the user types `thread-anchor`/`thread anchor`, says "继续上次对话/接着做/恢复会话/继续刚才/继续这个任务", asks to recover the previous Codex session, or asks to continue after a compact/crash break.'
 ---
 
 # thread-anchor
