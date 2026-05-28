@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/codexgo-logo.png" alt="codexgo-continuity logo" width="132">
+  <img src="assets/thread-anchor-logo.png" alt="thread-anchor logo" width="132">
 </p>
 
-<h1 align="center">codexgo-continuity</h1>
+<h1 align="center">thread-anchor</h1>
 
 <p align="center">
   <strong>一个更稳的 Codex 断点恢复 skill。</strong><br>
@@ -13,8 +13,6 @@
   <a href="README.en.md">English</a>
   ·
   <a href="ORIGIN_AND_CHANGES.md">来源与改进</a>
-  ·
-  <a href="https://github.com/JY0xLU/codexgo">参考项目 codexgo</a>
 </p>
 
 <p align="center">
@@ -26,13 +24,13 @@
 
 ## 是什么
 
-`codexgo-continuity` 处理一个很具体、也很烦人的问题：你刚把任务讲清楚，Codex 正在做，线程却因为 compact、崩溃或上下文丢失断掉了。新开一个会话输入 `codexgo-continuity`，它会按当前项目边界翻本地记录，把最应该继续的请求和最新进度找回来。
+`thread-anchor` 处理一个很具体、也很烦人的问题：你刚把任务讲清楚，Codex 正在做，线程却因为 compact、崩溃或上下文丢失断掉了。新开一个会话输入 `thread-anchor`，它会按当前项目边界翻本地记录，把最应该继续的请求和最新进度找回来。
 
 不玄学，不联网，也不碰你的数据库。它只是安静地读一读本地历史，然后告诉你：“刚才我们应该继续这个。” (｡•̀ᴗ-)✧
 
 ## 来源与改进
 
-本项目参考过 [`JY0xLU/codexgo`](https://github.com/JY0xLU/codexgo)，并保留 Apache-2.0 许可和本地只读、零依赖的设计。
+本项目结合公开会话恢复思路开发，保留 Apache-2.0 许可和本地只读、零依赖的设计。
 
 这个分支重点修复实际使用中遇到的恢复质量问题：多开对话时可能串到别的项目、上一个对话后续已经做完却仍恢复旧任务、搜索过旧历史、默认输出过长，以及没有明显标志词时丢失最新状态。
 
@@ -47,7 +45,7 @@ Error running remote compact task: stream disconnected before completion:
 error sending request for url (https://chatgpt.com/backend-api/codex/responses/compact)
 ```
 
-这时原线程往往已经接不上了；不过对话轨迹、工作区路径和任务线索仍然保存在本机 Codex 记录中。`codexgo-continuity` 的作用，就是从这些本地记录里还原出下一步该继续的请求，并尽量避免跨项目、回到旧任务或重复执行已完成工作。
+这时原线程往往已经接不上了；不过对话轨迹、工作区路径和任务线索仍然保存在本机 Codex 记录中。`thread-anchor` 的作用，就是从这些本地记录里还原出下一步该继续的请求，并尽量避免跨项目、回到旧任务或重复执行已完成工作。
 
 ## 解决方案
 
@@ -55,10 +53,10 @@ error sending request for url (https://chatgpt.com/backend-api/codex/responses/c
 
 1. 保持在同一个项目工作区，不必继续抢救已经断掉的线程。
 2. 新开一个 Codex 会话。
-3. 发送 `codexgo-continuity`。
+3. 发送 `thread-anchor`。
 
 ```text
-codexgo-continuity
+thread-anchor
 ```
 
 它会整理上一轮对话里的最后一条可执行请求和后续最新状态，让新线程直接接上原来的任务。你不用凭记忆复述需求，也不用手动拼回上下文。
@@ -83,7 +81,7 @@ codexgo-continuity
 
 ## 安装
 
-`codexgo-continuity` 是一个 Codex skill，不是 pip 包。把仓库放进 Codex 的 `skills/codexgo-continuity` 目录，然后重启 Codex 就行。
+`thread-anchor` 是一个 Codex skill，不是 pip 包。把仓库放进 Codex 的 `skills/thread-anchor` 目录，然后重启 Codex 就行。
 
 ### Codex App
 
@@ -94,7 +92,7 @@ Windows PowerShell：
 ```powershell
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } elseif (Test-Path "D:\CodexData\.codex") { "D:\CodexData\.codex" } else { "$HOME\.codex" }
 New-Item -ItemType Directory -Force "$CodexHome\skills" | Out-Null
-git clone <your-repo-url> "$CodexHome\skills\codexgo-continuity"
+git clone <your-repo-url> "$CodexHome\skills\thread-anchor"
 ```
 
 然后完全重启 Codex App。小家伙要重新被扫描到，别只刷新页面。 (｀・ω・´)
@@ -103,7 +101,7 @@ git clone <your-repo-url> "$CodexHome\skills\codexgo-continuity"
 
 ```bash
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-git clone <your-repo-url> "${CODEX_HOME:-$HOME/.codex}/skills/codexgo-continuity"
+git clone <your-repo-url> "${CODEX_HOME:-$HOME/.codex}/skills/thread-anchor"
 ```
 
 ### Codex CLI: Windows PowerShell
@@ -111,13 +109,13 @@ git clone <your-repo-url> "${CODEX_HOME:-$HOME/.codex}/skills/codexgo-continuity
 ```powershell
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { "$HOME\.codex" }
 New-Item -ItemType Directory -Force "$CodexHome\skills" | Out-Null
-git clone <your-repo-url> "$CodexHome\skills\codexgo-continuity"
+git clone <your-repo-url> "$CodexHome\skills\thread-anchor"
 ```
 
 重启 Codex App，或者重新打开一个 Codex CLI 会话，然后输入：
 
 ```text
-codexgo-continuity
+thread-anchor
 ```
 
 如果你刚从一个断掉的线程里爬出来，这通常就是第一句要说的话。别解释第二遍，让小工具先翻翻旧账。
@@ -125,14 +123,14 @@ codexgo-continuity
 ## 使用图
 
 <p align="center">
-  <img src="assets/codexgo-usage.png" alt="codexgo-continuity recovery flow" width="100%">
+  <img src="assets/thread-anchor-flow.png" alt="thread-anchor recovery flow" width="100%">
 </p>
 
 ## 它会处理什么
 
 它主要负责把“人类随口说的话”变回“机器可以继续执行的任务”。小小一只，但会努力往前翻。 (ง •̀_•́)ง
 
-| 中断前最后一条消息 | codexgo-continuity 怎么判断 |
+| 中断前最后一条消息 | thread-anchor 怎么判断 |
 | --- | --- |
 | 真正的任务 | 直接返回这条任务 |
 | `continue` / `go on` / `继续` | 向前找到上一条真实请求 |

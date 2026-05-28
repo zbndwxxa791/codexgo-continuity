@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/codexgo-logo.png" alt="codexgo-continuity logo" width="132">
+  <img src="assets/thread-anchor-logo.png" alt="thread-anchor logo" width="132">
 </p>
 
-<h1 align="center">codexgo-continuity</h1>
+<h1 align="center">thread-anchor</h1>
 
 <p align="center">
   <strong>A steadier Codex recovery skill.</strong><br>
@@ -13,8 +13,6 @@
   <a href="README.md">中文</a>
   ·
   <a href="ORIGIN_AND_CHANGES.md">Origin and changes</a>
-  ·
-  <a href="https://github.com/JY0xLU/codexgo">Reference project</a>
 </p>
 
 <p align="center">
@@ -26,13 +24,13 @@
 
 ## What It Is
 
-`codexgo-continuity` solves one specific, mildly cursed problem: you already explained the task, Codex started working, and the thread vanished because of compaction failure, crash, or lost context. Open a fresh session, type `codexgo-continuity`, and it reads local Codex state plus rollout records to recover the most likely continuation request and latest progress.
+`thread-anchor` solves one specific, mildly cursed problem: you already explained the task, Codex started working, and the thread vanished because of compaction failure, crash, or lost context. Open a fresh session, type `thread-anchor`, and it reads local Codex state plus rollout records to recover the most likely continuation request and latest progress.
 
 No cloud memory. No magic. No database writes. Just a tiny recovery buddy rummaging through local history and saying, "hey, we were doing this." (｡•̀ᴗ-)✧
 
 ## Origin and Changes
 
-This project referenced [`JY0xLU/codexgo`](https://github.com/JY0xLU/codexgo) during implementation. It keeps the Apache-2.0 license and the same local-only, read-only, zero-dependency design.
+This project was developed from generally available recovery patterns and keeps the Apache-2.0 license and the same local-only, read-only, zero-dependency design.
 
 This version focuses on recovery quality issues found in local use: project bleed when multiple conversations are open, stale task recovery after later work is already done, overly old fallback, excessive default context, and loss of the newest state when there are no obvious marker words.
 
@@ -47,7 +45,7 @@ Error running remote compact task: stream disconnected before completion:
 error sending request for url (https://chatgpt.com/backend-api/codex/responses/compact)
 ```
 
-At that point the original thread may no longer be usable, but the conversation trail, workspace path, and task clues are still stored in local Codex records. `codexgo-continuity` reads those records, reconstructs the request you should continue from, and tries to avoid project bleed, stale tasks, and duplicated work.
+At that point the original thread may no longer be usable, but the conversation trail, workspace path, and task clues are still stored in local Codex records. `thread-anchor` reads those records, reconstructs the request you should continue from, and tries to avoid project bleed, stale tasks, and duplicated work.
 
 ## The Fix
 
@@ -55,10 +53,10 @@ After a compact interruption:
 
 1. Stay in the same project workspace. Do not spend time reviving the broken thread.
 2. Open a fresh Codex session.
-3. Type `codexgo-continuity`.
+3. Type `thread-anchor`.
 
 ```text
-codexgo-continuity
+thread-anchor
 ```
 
 It extracts the last actionable request and the newer thread state from the previous conversation so the new thread can continue in the right place. No manual recall, no re-explaining the requirement, no rebuilding context from scratch.
@@ -83,7 +81,7 @@ It extracts the last actionable request and the newer thread state from the prev
 
 ## Install
 
-`codexgo-continuity` is a Codex skill, not a pip package. Put this repository in Codex's `skills/codexgo-continuity` directory, then restart Codex.
+`thread-anchor` is a Codex skill, not a pip package. Put this repository in Codex's `skills/thread-anchor` directory, then restart Codex.
 
 ### Codex App
 
@@ -94,7 +92,7 @@ Windows PowerShell:
 ```powershell
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } elseif (Test-Path "D:\CodexData\.codex") { "D:\CodexData\.codex" } else { "$HOME\.codex" }
 New-Item -ItemType Directory -Force "$CodexHome\skills" | Out-Null
-git clone <your-repo-url> "$CodexHome\skills\codexgo-continuity"
+git clone <your-repo-url> "$CodexHome\skills\thread-anchor"
 ```
 
 Then fully restart the Codex app so it can rescan local skills.
@@ -103,7 +101,7 @@ Then fully restart the Codex app so it can rescan local skills.
 
 ```bash
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-git clone <your-repo-url> "${CODEX_HOME:-$HOME/.codex}/skills/codexgo-continuity"
+git clone <your-repo-url> "${CODEX_HOME:-$HOME/.codex}/skills/thread-anchor"
 ```
 
 ### Codex CLI: Windows PowerShell
@@ -111,13 +109,13 @@ git clone <your-repo-url> "${CODEX_HOME:-$HOME/.codex}/skills/codexgo-continuity
 ```powershell
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { "$HOME\.codex" }
 New-Item -ItemType Directory -Force "$CodexHome\skills" | Out-Null
-git clone <your-repo-url> "$CodexHome\skills\codexgo-continuity"
+git clone <your-repo-url> "$CodexHome\skills\thread-anchor"
 ```
 
 Restart the Codex app, or open a fresh Codex CLI session, then type:
 
 ```text
-codexgo-continuity
+thread-anchor
 ```
 
 If you just crawled out of a broken thread, this is usually the first thing to say. No need to explain the whole task twice.
@@ -125,14 +123,14 @@ If you just crawled out of a broken thread, this is usually the first thing to s
 ## Usage Flow
 
 <p align="center">
-  <img src="assets/codexgo-usage.png" alt="codexgo-continuity recovery flow" width="100%">
+  <img src="assets/thread-anchor-flow.png" alt="thread-anchor recovery flow" width="100%">
 </p>
 
 ## What It Handles
 
 Its job is to turn "human continuation noise" back into something Codex can actually continue. Small tool, useful little shovel. (ง •̀_•́)ง
 
-| Last message before interruption | How codexgo-continuity resolves it |
+| Last message before interruption | How thread-anchor resolves it |
 | --- | --- |
 | A real task | Returns that task directly |
 | `continue` / `go on` / `继续` | Walks back to the previous real request |
@@ -143,7 +141,7 @@ Its job is to turn "human continuation noise" back into something Codex can actu
 | Selection or comparison prompts | Emits `decision_basis_message` as the decision basis |
 | Automation use cases | Emits JSON for downstream tools |
 
-JSON output also includes `context_expanded_upward`, which tells callers whether codexgo-continuity had to walk further upward to resolve an ambiguous reference. `matched_cwd` is the search target that matched; `thread_cwd` is the recovered thread's actual workspace.
+JSON output also includes `context_expanded_upward`, which tells callers whether thread-anchor had to walk further upward to resolve an ambiguous reference. `matched_cwd` is the search target that matched; `thread_cwd` is the recovered thread's actual workspace.
 
 ## Example Output
 

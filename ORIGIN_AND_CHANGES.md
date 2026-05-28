@@ -2,14 +2,13 @@
 
 ## New Project Name
 
-This repository is published as `codexgo-continuity`.
+This repository is published as `thread-anchor`.
 
-The name keeps the relationship to `codexgo` visible while making the new purpose explicit: safer Codex session continuity across fresh sessions after compaction, crash, or context loss.
+The name highlights its purpose: safer session continuity across fresh sessions after compaction, crash, or context loss.
 
-## Reference Project
+## Reference Basis
 
-- Referenced project: `codexgo`
-- Reference repository: https://github.com/JY0xLU/codexgo
+- Referenced model: a public, local-only continuity-recovery concept.
 - Reference license: Apache-2.0
 
 This repository was developed after reviewing the above project and keeps the same zero-dependency, local-state-only design.
@@ -38,4 +37,4 @@ The referenced recovery model was useful for finding a previous actionable reque
 
 ## Compatibility Notes
 
-The script remains `scripts/codexgo.py` for compatibility with the existing project layout. The skill name and recommended repository/install directory are `codexgo-continuity`.
+The script remains `scripts/codexgo.py` for compatibility with the existing project layout. The skill name and recommended repository/install directory are `thread-anchor`.

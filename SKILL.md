@@ -1,9 +1,9 @@
 ---
-name: "codexgo-continuity"
-description: 'Recover the previous Codex session for the current workspace after compaction, crash, or context loss. Use when the user types `codexgo-continuity`, asks to recover the previous Codex session, or asks to continue after a compact/crash break.'
+name: "thread-anchor"
+description: 'Recover the previous Codex session for the current workspace after compaction, crash, or context loss. Use when the user types `thread-anchor`, asks to recover the previous Codex session, or asks to continue after a compact/crash break.'
 ---
 
-# codexgo-continuity
+# thread-anchor
 
 Use this skill only when the user explicitly wants to recover the previous Codex session for the current workspace, usually at the start of a fresh session after compaction or crash.
 
@@ -14,18 +14,18 @@ Do not auto-trigger this skill later in a normal active conversation from vague 
 Run:
 
 ```bash
-python <codexgo-continuity-skill-dir>/scripts/codexgo.py --cwd "$PWD" --format json
+python <thread-anchor-skill-dir>/scripts/codexgo.py --cwd "$PWD" --format json
 ```
 
-Resolve `<codexgo-continuity-skill-dir>` as the directory containing this `SKILL.md`. Keep `--cwd` pointed at the user's current project workspace, not at the skill directory.
+Resolve `<thread-anchor-skill-dir>` as the directory containing this `SKILL.md`. Keep `--cwd` pointed at the user's current project workspace, not at the skill directory.
 
 On Windows PowerShell:
 
 ```powershell
-python "<codexgo-continuity-skill-dir>\scripts\codexgo.py" --cwd . --format json
+python "<thread-anchor-skill-dir>\scripts\codexgo.py" --cwd . --format json
 ```
 
-By default, `codexgo-continuity` first identifies the current project, using the Git root when available and the current working directory otherwise. It then recovers the immediately previous recent thread whose working directory is inside that project. If that previous project thread has no recoverable user request, it reports an error instead of falling back to older threads. This prevents a fresh session from accidentally continuing another project or a stale older task. If the user explicitly wants a narrower, broader, older, or older-fallback search, pass `--scope exact`, `--scope repo`, `--scope tree`, `--max-age-days 0`, or `--fallback-older`.
+By default, `thread-anchor` first identifies the current project, using the Git root when available and the current working directory otherwise. It then recovers the immediately previous recent thread whose working directory is inside that project. If that previous project thread has no recoverable user request, it reports an error instead of falling back to older threads. This prevents a fresh session from accidentally continuing another project or a stale older task. If the user explicitly wants a narrower, broader, older, or older-fallback search, pass `--scope exact`, `--scope repo`, `--scope tree`, `--max-age-days 0`, or `--fallback-older`.
 
 Default output is intentionally minimal to avoid spending the new session's context on recovered history. Do not rerun with `--detail context`, `--detail full`, `--pretty`, or `--max-field-chars 0` unless the user asks for more detail or the minimal recovery report is ambiguous.
 
