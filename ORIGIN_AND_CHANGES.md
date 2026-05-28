@@ -6,17 +6,17 @@ This repository is published as `codexgo-continuity`.
 
 The name keeps the relationship to `codexgo` visible while making the new purpose explicit: safer Codex session continuity across fresh sessions after compaction, crash, or context loss.
 
-## Upstream Project
+## Reference Project
 
-- Original project: `codexgo`
-- Original repository: https://github.com/JY0xLU/codexgo
-- Original license: Apache-2.0
+- Referenced project: `codexgo`
+- Reference repository: https://github.com/JY0xLU/codexgo
+- Reference license: Apache-2.0
 
-This repository is a derivative/fork-style enhancement of the original local-only Codex recovery skill. It keeps the same zero-dependency, local-state-only design.
+This repository was developed after reviewing the above project and keeps the same zero-dependency, local-state-only design.
 
 ## Problems Addressed
 
-The original recovery model was useful for finding a previous actionable request, but the local usage exposed several practical failure modes:
+The referenced recovery model was useful for finding a previous actionable request, but local usage exposed several practical failure modes:
 
 - Project bleed: when multiple Codex conversations were open, recovery could land in another nearby project or an internal approval/review thread.
 - Stale continuation: the recovered request could point to an older task even when the previous thread had already completed later work.
@@ -38,4 +38,4 @@ The original recovery model was useful for finding a previous actionable request
 
 ## Compatibility Notes
 
-The script remains `scripts/codexgo.py` for compatibility with the original project layout. The skill name and recommended repository/install directory are `codexgo-continuity`.
+The script remains `scripts/codexgo.py` for compatibility with the existing project layout. The skill name and recommended repository/install directory are `codexgo-continuity`.

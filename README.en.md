@@ -14,7 +14,7 @@
   ·
   <a href="ORIGIN_AND_CHANGES.md">Origin and changes</a>
   ·
-  <a href="https://github.com/JY0xLU/codexgo">Original codexgo</a>
+  <a href="https://github.com/JY0xLU/codexgo">Reference project</a>
 </p>
 
 <p align="center">
@@ -32,9 +32,9 @@ No cloud memory. No magic. No database writes. Just a tiny recovery buddy rummag
 
 ## Origin and Changes
 
-This project is based on the original [`JY0xLU/codexgo`](https://github.com/JY0xLU/codexgo) project. It keeps the Apache-2.0 license and the same local-only, read-only, zero-dependency design.
+This project referenced [`JY0xLU/codexgo`](https://github.com/JY0xLU/codexgo) during implementation. It keeps the Apache-2.0 license and the same local-only, read-only, zero-dependency design.
 
-This fork focuses on recovery quality issues found in local use: project bleed when multiple conversations are open, stale task recovery after later work is already done, overly old fallback, excessive default context, and loss of the newest state when there are no obvious marker words.
+This version focuses on recovery quality issues found in local use: project bleed when multiple conversations are open, stale task recovery after later work is already done, overly old fallback, excessive default context, and loss of the newest state when there are no obvious marker words.
 
 See [ORIGIN_AND_CHANGES.md](ORIGIN_AND_CHANGES.md) for the full breakdown.
 

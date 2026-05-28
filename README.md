@@ -14,7 +14,7 @@
   ·
   <a href="ORIGIN_AND_CHANGES.md">来源与改进</a>
   ·
-  <a href="https://github.com/JY0xLU/codexgo">原项目 codexgo</a>
+  <a href="https://github.com/JY0xLU/codexgo">参考项目 codexgo</a>
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@
 
 ## 来源与改进
 
-本项目基于原始项目 [`JY0xLU/codexgo`](https://github.com/JY0xLU/codexgo) 改进，保留 Apache-2.0 许可和本地只读、零依赖的设计。
+本项目参考过 [`JY0xLU/codexgo`](https://github.com/JY0xLU/codexgo)，并保留 Apache-2.0 许可和本地只读、零依赖的设计。
 
 这个分支重点修复实际使用中遇到的恢复质量问题：多开对话时可能串到别的项目、上一个对话后续已经做完却仍恢复旧任务、搜索过旧历史、默认输出过长，以及没有明显标志词时丢失最新状态。
 
